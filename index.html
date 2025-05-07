@@ -9,30 +9,34 @@
 <body>
   <div class="container">
     <h1>🎬 Movie Finder</h1>
+
     <div class="search-box">
-      <input type="text" id="movieInput" placeholder="Enter movie title">
-      <select id="genreFilter">
-        <option value="">All Genres</option>
+      <input type="text" id="movieInput" placeholder="Enter movie title" />
+      <select id="genreSelect">
+        <option value="All">All Genres</option>
         <option value="Action">Action</option>
         <option value="Comedy">Comedy</option>
         <option value="Drama">Drama</option>
         <option value="Romance">Romance</option>
         <option value="Horror">Horror</option>
-        <option value="Sci-Fi">Sci-Fi</option>
+        <option value="Thriller">Thriller</option>
       </select>
-      <button onclick="searchMovie()">Search</button>
+      <button id="searchBtn">Search</button>
     </div>
+
     <div id="movieDetails"></div>
-    
+
     <h2>📌 Watch Later</h2>
     <ul id="watchLaterList"></ul>
 
-    <div class="api-box">
-      <label for="apiKey">Enter your OMDb API Key:</label>
-      <input type="text" id="apiKey" placeholder="Your API Key" />
-      <button onclick="saveApiKey()">Save Key</button>
+    <div class="api-key-box">
+      <label for="apiKeyInput">Enter your OMDb API Key:</label>
+      <input type="text" id="apiKeyInput" placeholder="Your API Key" />
+      <button id="saveKeyBtn">Save Key</button>
     </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
+

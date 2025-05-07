@@ -1,63 +1,87 @@
 body {
+    margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background-color: #1f1e2e;
-    color: #f1f1f1;
-    text-align: center;
-    padding: 20px;
+    background-color: #1e1e2f;
+    color: #fff;
   }
   
   .container {
-    background: #2c2b3c;
+    max-width: 600px;
+    margin: 40px auto;
+    background: #2e2e3a;
     padding: 30px;
-    border-radius: 10px;
-    display: inline-block;
-    max-width: 500px;
-    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    text-align: center;
   }
   
   h1 {
-    color: #ffc107;
+    color: #f1c40f;
+  }
+  
+  .search-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin-bottom: 20px;
   }
   
   .search-box input,
   .search-box select,
-  .api-box input {
+  .api-key-box input {
     padding: 10px;
-    margin: 10px 5px;
+    font-size: 1rem;
     border-radius: 5px;
     border: none;
-    width: 60%;
   }
   
   button {
-    background-color: #ffc107;
+    background-color: #f1c40f;
+    color: #000;
+    padding: 10px 16px;
     border: none;
-    padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
   }
   
   button:hover {
-    background-color: #e0a800;
+    background-color: #d4ac0d;
   }
   
   #movieDetails img {
+    margin-top: 15px;
     width: 200px;
-    margin: 10px 0;
+    border-radius: 8px;
   }
   
-  .api-box {
-    margin-top: 30px;
-  }
-  
-  ul {
+  #suggestions {
     list-style: none;
+    background: #2e2e3a;
+    color: white;
     padding: 0;
+    margin-top: 0;
+    border-radius: 4px;
+    max-width: 400px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 10;
   }
   
-  ul li a {
-    color: #66b3ff;
-    text-decoration: none;
+  #suggestions li {
+    padding: 8px 12px;
+    border-bottom: 1px solid #444;
+    cursor: pointer;
+  }
+  
+  #suggestions li:hover {
+    background: #444;
+  }
+  
+  .api-key-box {
+    margin-top: 30px;
   }
   
