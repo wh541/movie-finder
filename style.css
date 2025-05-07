@@ -1,56 +1,86 @@
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: Arial, sans-serif;
     background-color: #1e1e2f;
     color: #ffffff;
     margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
+    padding: 20px;
   }
   
   .container {
     max-width: 600px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #2c2c3c;
-    border-radius: 10px;
+    margin: auto;
+    padding: 30px;
+    background-color: #2c2c3e;
+    border-radius: 8px;
     text-align: center;
   }
   
-  input, select, button {
+  h1, h2 {
+    color: #ffc107;
+    margin-bottom: 15px;
+  }
+  
+  input[type="text"], select {
     padding: 10px;
     margin: 10px 5px;
-    border-radius: 5px;
     border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 60%;
   }
   
   button {
-    background-color: #f5c518;
+    padding: 10px 16px;
+    margin-top: 10px;
+    font-size: 16px;
+    background-color: #ffc107;
+    color: #000;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
   }
   
-  #movieInfo {
-    margin-top: 20px;
-    padding: 1rem;
-    background-color: #3c3c5c;
-    border-radius: 5px;
+  button:hover {
+    background-color: #ffca28;
   }
   
   #movieInfo img {
-    max-width: 200px;
+    width: 180px;
+    margin-top: 10px;
+    border-radius: 5px;
   }
   
-  #watchLaterList {
-    list-style-type: none;
-    padding-left: 0;
+  #movieInfo a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #00bcd4;
+    text-decoration: none;
   }
   
-  a {
-    color: #57d9ff;
+  #movieInfo a:hover {
+    text-decoration: underline;
   }
   
   .api-section {
-    margin-top: 20px;
+    margin-top: 30px;
+  }
+  
+  #watchLaterList {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+  }
+  
+  #watchLaterList li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
+  }
+  
+  #watchLaterList li span {
+    margin-right: 10px;
+    cursor: pointer;
+    color: #00bcd4;
   }
   
