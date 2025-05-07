@@ -102,15 +102,15 @@ document.addEventListener("DOMContentLoaded", () => {
           removeBtn.title = "Remove from Watch Later";
       
           removeBtn.addEventListener("click", () => {
-            const updatedList = saved.filter((m) => m !== movie);
+            const updatedList = saved.filter((m) => m.imdbID !== movie.imdbID);
             localStorage.setItem("watchLater", JSON.stringify(updatedList));
             renderWatchLaterList();
           });
       
           const link = document.createElement("a");
-          link.href = `https://www.imdb.com/find?q=${encodeURIComponent(movie)}`;
+          link.href = `https://www.imdb.com/title/${movie.imdbID}`;
           link.target = "_blank";
-          link.textContent = movie;
+          link.textContent = movie.title;
           link.style.color = "#00bcd4";
           link.style.textDecoration = "none";
       
@@ -120,11 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
       
-    backBtn.addEventListener("click", () => {
-      movieInfo.innerHTML = "";
-      backBtn.style.display = "none";
-    });
-  
     renderWatchLater();
   });
   
