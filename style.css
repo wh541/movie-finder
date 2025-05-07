@@ -1,64 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f2f2f2;
-    text-align: center;
-    padding: 30px;
-  }
-  
-  .container {
-    max-width: 600px;
-    margin: auto;
-  }
-  
-  .search-box {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  input, select, button {
-    padding: 10px;
-    font-size: 16px;
-  }
-  
-  #suggestions {
-    list-style: none;
-    padding: 0;
-    margin: 10px auto;
-    text-align: left;
-    max-width: 400px;
-  }
-  
-  #suggestions li {
-    padding: 8px;
-    background: #fff;
-    border: 1px solid #ddd;
-    cursor: pointer;
-  }
-  
-  #movieDetails {
-    background: #fff;
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  #movieDetails img {
-    max-width: 100%;
-  }
-  
-  .rating-high {
-    color: green;
-    font-weight: bold;
-  }
-  
-  .rating-medium {
-    color: orange;
-    font-weight: bold;
-  }
-  
-  .rating-low {
-    color: red;
-    font-weight: bold;
-  }
-  
+  font-family: 'Raleway', sans-serif;
+  background: #1e1e2f;
+  color: #f4f4f4;
+  text-align: center;
+  padding: 30px;
+  margin: 0;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: #2a2a40;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #ffd369;
+}
+
+input, select, button {
+  padding: 10px;
+  font-size: 1rem;
+  margin: 10px 5px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+input {
+  width: 60%;
+}
+
+button {
+  background: #ffd369;
+  color: #1e1e2f;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ffbe33;
+}
+
+#suggestions {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 400px;
+  text-align: left;
+}
+
+#suggestions li {
+  padding: 8px;
+  background: #3a3a55;
+  border-bottom: 1px solid #555;
+  cursor: pointer;
+}
+
+#suggestions li:hover {
+  background: #505071;
+}
+
+#movieDetails {
+  margin-top: 20px;
+  text-align: left;
+}
+
+#movieDetails img {
+  max-width: 200px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+#movieDetails p {
+  margin: 10px 0;
+  font-size: 1rem;
+}
+
+.rating-high {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.rating-medium {
+  color: #ff9800;
+  font-weight: bold;
+}
+
+.rating-low {
+  color: #f44336;
+  font-weight: bold;
+}
+
+.filters {
+  margin: 15px 0;
+}
+
+#watchLaterList {
+  text-align: left;
+  padding-left: 20px;
+}
+
+#watchLaterList li {
+  margin-bottom: 6px;
+}
