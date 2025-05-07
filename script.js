@@ -69,57 +69,61 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>IMDb Rating:</strong> ${data.imdbRating}</p>
         <img src="${data.Poster}" alt="Poster for ${data.Title}"><br>
         <a href="https://www.imdb.com/title/${data.imdbID}" target="_blank">🔗 View on IMDb</a><br><br>
-        <button onclick="addToWatchLater('${data.Title}', '${data.imdbID}')">📌 Add to Watch Later</button>
+        <button onclick='addToWatchLater(${JSON.stringify({ title: data.Title, imdbID: data.imdbID })})'>📌 Add to Watch Later</button>
       `;
       backBtn.style.display = "block";
     }
   
-    window.addToWatchLater = (title, imdbID) => {
+    window.addToWatchLater = function(movie) {
       const saved = JSON.parse(localStorage.getItem("watchLater")) || [];
-      if (!saved.find(m => m.imdbID === imdbID)) {
-        saved.push({ title, imdbID });
+      if (!saved.find(m => m.imdbID === movie.imdbID)) {
+        saved.push(movie);
         localStorage.setItem("watchLater", JSON.stringify(saved));
-        renderWatchLater();
+        renderWatchLaterList();
       }
     };
   
     function renderWatchLaterList() {
-        const watchLaterList = document.getElementById("watchLaterList");
-        watchLaterList.innerHTML = "";
-        const saved = JSON.parse(localStorage.getItem("watchLater")) || [];
-      
-        saved.forEach((movie) => {
-          const li = document.createElement("li");
-          li.style.display = "flex";
-          li.style.alignItems = "center";
-          li.style.marginBottom = "4px";
-      
-          const removeBtn = document.createElement("span");
-          removeBtn.textContent = "❌";
-          removeBtn.style.cursor = "pointer";
-          removeBtn.style.color = "#00bcd4";
-          removeBtn.style.marginRight = "8px";
-          removeBtn.title = "Remove from Watch Later";
-      
-          removeBtn.addEventListener("click", () => {
-            const updatedList = saved.filter((m) => m.imdbID !== movie.imdbID);
-            localStorage.setItem("watchLater", JSON.stringify(updatedList));
-            renderWatchLaterList();
-          });
-      
-          const link = document.createElement("a");
-          link.href = `https://www.imdb.com/title/${movie.imdbID}`;
-          link.target = "_blank";
-          link.textContent = movie.title;
-          link.style.color = "#00bcd4";
-          link.style.textDecoration = "none";
-      
-          li.appendChild(removeBtn);
-          li.appendChild(link);
-          watchLaterList.appendChild(li);
+      const saved = JSON.parse(localStorage.getItem("watchLater")) || [];
+      watchLaterList.innerHTML = "";
+  
+      saved.forEach(movie => {
+        const li = document.createElement("li");
+        li.style.display = "flex";
+        li.style.alignItems = "center";
+        li.style.marginBottom = "4px";
+  
+        const removeBtn = document.createElement("span");
+        removeBtn.textContent = "❌";
+        removeBtn.style.cursor = "pointer";
+        removeBtn.style.color = "#00bcd4";
+        removeBtn.style.marginRight = "8px";
+        removeBtn.title = "Remove from Watch Later";
+  
+        removeBtn.addEventListener("click", () => {
+          const updatedList = saved.filter(m => m.imdbID !== movie.imdbID);
+          localStorage.setItem("watchLater", JSON.stringify(updatedList));
+          renderWatchLaterList();
         });
-      }
-      
-    renderWatchLater();
+  
+        const link = document.createElement("a");
+        link.href = `https://www.imdb.com/title/${movie.imdbID}`;
+        link.target = "_blank";
+        link.textContent = movie.title;
+        link.style.color = "#00bcd4";
+        link.style.textDecoration = "none";
+  
+        li.appendChild(removeBtn);
+        li.appendChild(link);
+        watchLaterList.appendChild(li);
+      });
+    }
+  
+    backBtn.addEventListener("click", () => {
+      movieInfo.innerHTML = "";
+      backBtn.style.display = "none";
+    });
+  
+    renderWatchLaterList();
   });
   
