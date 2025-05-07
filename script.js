@@ -83,6 +83,8 @@ searchBtn.addEventListener("click", async () => {
     <p><strong>IMDb Rating:</strong> ${data.imdbRating}</p>
     <img src="${data.Poster !== "N/A" ? data.Poster : ""}" alt="${data.Title} Poster" />
     <br/><br/>
+    <a href="https://www.imdb.com/title/${data.imdbID}" target="_blank">🎥 View on IMDb</a>
+    <br/><br/>
     <button onclick="addToWatchLater('${data.Title}', '${data.imdbID}')">➕ Add to Watch Later</button>
   `;
 
