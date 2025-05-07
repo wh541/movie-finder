@@ -3,38 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Movie Finder</title>
+  <title>🎬 Movie Finder</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>🎬 Movie Finder</h1>
-    <div class="input-group">
-      <input type="text" id="movieInput" placeholder="Enter movie title" list="suggestions"/>
-      <select id="genreFilter">
-        <option value="">All Genres</option>
-        <option value="Action">Action</option>
-        <option value="Comedy">Comedy</option>
-        <option value="Drama">Drama</option>
-        <option value="Horror">Horror</option>
-        <option value="Romance">Romance</option>
-        <option value="Sci-Fi">Sci-Fi</option>
-        <!-- Add more genres as needed -->
-      </select>
-    </div>
+    <h1>🎬 <span>Movie Finder</span></h1>
+
+    <input type="text" id="movieTitle" placeholder="Enter movie title" />
+    <select id="genreFilter">
+      <option value="All">All Genres</option>
+      <option value="Action">Action</option>
+      <option value="Comedy">Comedy</option>
+      <option value="Drama">Drama</option>
+      <option value="Romance">Romance</option>
+      <option value="Thriller">Thriller</option>
+    </select>
+
     <button id="searchBtn">Search</button>
-    <datalist id="suggestions"></datalist>
 
     <div id="movieInfo"></div>
+
+    <button id="backBtn" style="display:none;">Back to Home</button>
 
     <h2>📌 Watch Later</h2>
     <ul id="watchLaterList"></ul>
 
-    <div class="api-key-section">
-      <label for="apiKeyInput">Enter your OMDb API Key:</label>
-      <input type="text" id="apiKeyInput" placeholder="Your API Key"/>
-      <button id="saveKeyBtn">Save Key</button>
-    </div>
+    <label for="apiKeyInput">Enter your OMDb API Key:</label>
+    <input type="text" id="apiKeyInput" placeholder="Your API Key" />
+    <button id="saveApiKeyBtn">Save Key</button>
   </div>
 
   <script src="script.js"></script>
