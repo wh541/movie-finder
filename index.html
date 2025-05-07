@@ -22,6 +22,29 @@
     <div id="movieDetails"></div>
     <h2>📌 Watch Later</h2>
     <ul id="watchLaterList"></ul>
+
+    <!-- inside your <body> -->
+<div class="search-box">
+    <input type="text" id="movieInput" placeholder="Enter movie title" autocomplete="off" />
+    <button id="searchBtn">Search</button>
+  </div>
+  
+  <div class="filters">
+    <label for="typeFilter">Type:</label>
+    <select id="typeFilter">
+      <option value="">All</option>
+      <option value="movie">Movie</option>
+      <option value="series">Series</option>
+      <option value="episode">Episode</option>
+    </select>
+  </div>
+  
+  <ul id="suggestions"></ul>
+  <div id="movieDetails"></div>
+  
+  <h2>📌 Watch Later</h2>
+  <div id="watchLaterGrid" class="grid-watch-later"></div>
+  
   </div>
 
   <script src="script.js"></script>

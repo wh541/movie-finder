@@ -8,8 +8,8 @@ const movieInput = document.getElementById('movieInput');
 const searchBtn = document.getElementById('searchBtn');
 const suggestions = document.getElementById('suggestions');
 const movieDetails = document.getElementById('movieDetails');
-const watchLaterList = document.getElementById('watchLaterList');
-const genreFilter = document.getElementById('genreFilter');
+const typeFilter = document.getElementById('typeFilter');
+const watchLaterGrid = document.getElementById('watchLaterGrid');
 
 searchBtn.addEventListener('click', () => {
   const title = movieInput.value.trim();
@@ -18,8 +18,9 @@ searchBtn.addEventListener('click', () => {
 
 movieInput.addEventListener('input', () => {
   const query = movieInput.value.trim();
+  const type = typeFilter.value;
   if (query.length >= 3) {
-    fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=${query}`)
+    fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=${query}${type ? `&type=${type}` : ''}`)
       .then(res => res.json())
       .then(data => {
         suggestions.innerHTML = '';
@@ -42,7 +43,8 @@ movieInput.addEventListener('input', () => {
 });
 
 function fetchMovie(title) {
-  fetch(`https://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(title)}`)
+  const type = typeFilter.value;
+  fetch(`https://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(title)}${type ? `&type=${type}` : ''}`)
     .then(res => res.json())
     .then(data => {
       if (data.Response === 'True') {
@@ -64,7 +66,11 @@ function renderMovie(movie) {
     <p><strong>Genre:</strong> ${movie.Genre}</p>
     <p><strong>Runtime:</strong> ${movie.Runtime}</p>
     <p><strong>Rating:</strong> <span class="${ratingClass}">${movie.imdbRating}</span></p>
-    <button onclick="addToWatchLater('${movie.Title}')">➕ Watch Later</button>
+    <button onclick="addToWatchLater('${movie.Title}', '${movie.Poster}', '${movie.imdbID}')">➕ Watch Later</button>
+    <br/><br/>
+    <a href="https://www.imdb.com/title/${movie.imdbID}" target="_blank">
+      🎥 View on IMDb
+    </a>
   `;
 }
 
@@ -75,10 +81,10 @@ function getRatingClass(rating) {
   return 'rating-low';
 }
 
-function addToWatchLater(title) {
+function addToWatchLater(title, poster, imdbID) {
   let list = JSON.parse(localStorage.getItem('watchLater')) || [];
-  if (!list.includes(title)) {
-    list.push(title);
+  if (!list.some(item => item.title === title)) {
+    list.push({ title, poster, imdbID });
     localStorage.setItem('watchLater', JSON.stringify(list));
     renderWatchLater();
   }
@@ -86,15 +92,21 @@ function addToWatchLater(title) {
 
 function renderWatchLater() {
   let list = JSON.parse(localStorage.getItem('watchLater')) || [];
-  watchLaterList.innerHTML = '';
-  list.forEach(title => {
-    const li = document.createElement('li');
-    li.textContent = title;
-    watchLaterList.appendChild(li);
+  watchLaterGrid.innerHTML = '';
+  list.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'watch-card';
+    card.innerHTML = `
+      <img src="${item.poster !== 'N/A' ? item.poster : ''}" alt="${item.title}" />
+      <p>${item.title}</p>
+      <a href="https://www.imdb.com/title/${item.imdbID}" target="_blank">🔗 IMDb</a>
+    `;
+    watchLaterGrid.appendChild(card);
   });
 }
 
 function updateGenreFilter(genreStr) {
+  const genreFilter = document.getElementById('genreFilter');
   const genres = genreStr.split(',').map(g => g.trim());
   genres.forEach(g => {
     if (![...genreFilter.options].some(opt => opt.value === g)) {
@@ -106,5 +118,4 @@ function updateGenreFilter(genreStr) {
   });
 }
 
-// Load watch list on page load
 renderWatchLater();
