@@ -1,74 +1,55 @@
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #1d1d2e;
-    color: #f0f0f0;
-    margin: 0;
-    padding: 0;
+    background-color: #1c1c2e;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
     display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
   }
   
   .container {
+    background: #2c2c3c;
+    padding: 30px;
+    border-radius: 12px;
     width: 90%;
     max-width: 600px;
-    background-color: #2a2a40;
-    margin: 50px auto;
-    padding: 30px;
-    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     text-align: center;
   }
   
-  h1 span {
-    color: #f7c948;
-  }
-  
-  input, select {
+  input, select, button {
     padding: 10px;
-    margin: 10px;
-    width: 90%;
-    max-width: 300px;
-    border-radius: 5px;
+    margin: 10px 5px;
     border: none;
+    border-radius: 5px;
   }
   
   button {
-    background-color: #f7c948;
-    border: none;
-    padding: 10px 15px;
-    margin-top: 10px;
-    font-weight: bold;
-    border-radius: 5px;
+    background-color: #f5c518;
     cursor: pointer;
+    font-weight: bold;
   }
   
-  button:hover {
-    background-color: #f0b429;
+  #movieDetails img {
+    max-width: 200px;
+    margin: 10px auto;
   }
   
-  #movieInfo {
-    margin-top: 20px;
-    text-align: left;
-    background-color: #373750;
+  #movieDetails {
+    background: #3a3a4f;
     padding: 15px;
+    margin-top: 15px;
     border-radius: 8px;
+    text-align: left;
   }
   
-  #watchLaterList {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 10px;
-  }
-  
-  #watchLaterList li {
-    margin: 5px 0;
+  .api-key-container {
+    margin-top: 20px;
   }
   
   a {
-    color: #57d9ff;
-    text-decoration: none;
-  }
-  
-  #backBtn {
-    margin-top: 15px;
+    color: #87cefa;
   }
   
