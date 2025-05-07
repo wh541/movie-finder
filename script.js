@@ -1,77 +1,75 @@
-body {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: #1e1e2f;
-    color: #f4f4f4;
+function saveApiKey() {
+    const key = document.getElementById("apiKey").value;
+    sessionStorage.setItem("omdbApiKey", key);
+    alert("API key saved!");
   }
   
-  .container {
-    max-width: 600px;
-    margin: 40px auto;
-    background-color: #2c2c3e;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    text-align: center;
+  function getApiKey() {
+    return sessionStorage.getItem("omdbApiKey");
   }
   
-  h1 {
-    margin-bottom: 20px;
-    color: #fcbf49;
+  function searchMovie() {
+    const query = document.getElementById("movieInput").value;
+    const genreFilter = document.getElementById("genreFilter").value;
+    const apiKey = getApiKey();
+  
+    if (!apiKey) {
+      alert("Please enter and save your OMDb API key.");
+      return;
+    }
+  
+    if (!query) return;
+  
+    fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(query)}&apikey=${apiKey}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.Response === "False") {
+          document.getElementById("movieDetails").innerHTML = `<p>Movie not found.</p>`;
+          return;
+        }
+  
+        // Filter by genre
+        if (genreFilter && !data.Genre.toLowerCase().includes(genreFilter.toLowerCase())) {
+          document.getElementById("movieDetails").innerHTML = `<p>No results for selected genre.</p>`;
+          return;
+        }
+  
+        const html = `
+          <h2>${data.Title} (${data.Year})</h2>
+          <p><strong>Genre:</strong> ${data.Genre}</p>
+          <p><strong>Director:</strong> ${data.Director}</p>
+          <p><strong>Plot:</strong> ${data.Plot}</p>
+          <p><strong>IMDb Rating:</strong> ${data.imdbRating}</p>
+          <img src="${data.Poster !== "N/A" ? data.Poster : ""}" alt="${data.Title} Poster" />
+          <br/>
+          <a href="https://www.imdb.com/title/${data.imdbID}" target="_blank">🎥 View on IMDb</a>
+          <br/><br/>
+          <button onclick='addToWatchLater("${data.Title}", "${data.imdbID}")'>➕ Add to Watch Later</button>
+        `;
+        document.getElementById("movieDetails").innerHTML = html;
+      });
   }
   
-  input[type="text"], select {
-    padding: 10px;
-    width: 60%;
-    margin: 10px 5px;
-    border-radius: 5px;
-    border: none;
+  function addToWatchLater(title, imdbID) {
+    const watchList = JSON.parse(localStorage.getItem("watchLaterList") || "[]");
+    if (!watchList.find(m => m.imdbID === imdbID)) {
+      watchList.push({ title, imdbID });
+      localStorage.setItem("watchLaterList", JSON.stringify(watchList));
+      renderWatchLater();
+    }
   }
   
-  button {
-    padding: 10px 15px;
-    background-color: #fcbf49;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
+  function renderWatchLater() {
+    const list = JSON.parse(localStorage.getItem("watchLaterList") || "[]");
+    const ul = document.getElementById("watchLaterList");
+    ul.innerHTML = "";
+    list.forEach(movie => {
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="https://www.imdb.com/title/${movie.imdbID}" target="_blank">${movie.title}</a>`;
+      ul.appendChild(li);
+    });
   }
   
-  button:hover {
-    background-color: #f1a51b;
-  }
-  
-  #movieDetails img {
-    margin-top: 15px;
-    max-width: 200px;
-    border-radius: 5px;
-  }
-  
-  #suggestions {
-    list-style-type: none;
-    padding-left: 0;
-    margin-top: -10px;
-    background-color: #3a3a4f;
-    border-radius: 5px;
-    max-height: 150px;
-    overflow-y: auto;
-  }
-  
-  #suggestions li {
-    padding: 8px 10px;
-    cursor: pointer;
-    border-bottom: 1px solid #555;
-  }
-  
-  #suggestions li:hover {
-    background-color: #4a4a5f;
-  }
-  
-  #watchLaterList li {
-    margin-top: 5px;
-  }
-  
-  .key-entry {
-    margin-top: 20px;
-  }
+  // Initial render
+  renderWatchLater();
   
