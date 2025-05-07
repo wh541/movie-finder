@@ -90,12 +90,16 @@ document.addEventListener("DOMContentLoaded", () => {
       
         saved.forEach((movie) => {
           const li = document.createElement("li");
-          const removeBtn = document.createElement("span");
+          li.style.display = "flex";
+          li.style.alignItems = "center";
+          li.style.marginBottom = "4px";
       
+          const removeBtn = document.createElement("span");
           removeBtn.textContent = "❌";
           removeBtn.style.cursor = "pointer";
+          removeBtn.style.color = "#00bcd4";
           removeBtn.style.marginRight = "8px";
-          removeBtn.style.color = "#00bcd4"; // Match the movie link color
+          removeBtn.title = "Remove from Watch Later";
       
           removeBtn.addEventListener("click", () => {
             const updatedList = saved.filter((m) => m !== movie);
@@ -108,6 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
           link.target = "_blank";
           link.textContent = movie;
           link.style.color = "#00bcd4";
+          link.style.textDecoration = "none";
       
           li.appendChild(removeBtn);
           li.appendChild(link);
@@ -115,7 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
       
-  
     backBtn.addEventListener("click", () => {
       movieInfo.innerHTML = "";
       backBtn.style.display = "none";
