@@ -1,4 +1,9 @@
-const apiKey = 'b9476797'; // Replace with your OMDb key
+let apiKey = sessionStorage.getItem("omdbApiKey");
+if (!apiKey) {
+  apiKey = prompt("Enter your OMDb API Key:");
+  sessionStorage.setItem("omdbApiKey", apiKey);
+}
+
 const movieInput = document.getElementById('movieInput');
 const searchBtn = document.getElementById('searchBtn');
 const suggestions = document.getElementById('suggestions');
@@ -8,9 +13,7 @@ const genreFilter = document.getElementById('genreFilter');
 
 searchBtn.addEventListener('click', () => {
   const title = movieInput.value.trim();
-  if (title) {
-    fetchMovie(title);
-  }
+  if (title) fetchMovie(title);
 });
 
 movieInput.addEventListener('input', () => {
@@ -39,7 +42,7 @@ movieInput.addEventListener('input', () => {
 });
 
 function fetchMovie(title) {
-  fetch(`https://www.omdbapi.com/?apikey=${apiKey}&t=${title}`)
+  fetch(`https://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(title)}`)
     .then(res => res.json())
     .then(data => {
       if (data.Response === 'True') {
@@ -103,5 +106,5 @@ function updateGenreFilter(genreStr) {
   });
 }
 
-// Re-render watchlist on load
+// Load watch list on page load
 renderWatchLater();

@@ -1,16 +1,64 @@
 body {
     font-family: Arial, sans-serif;
+    background: #f2f2f2;
     text-align: center;
-    padding: 2rem;
+    padding: 30px;
   }
   
-  input, button {
-    font-size: 1rem;
+  .container {
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .search-box {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  input, select, button {
     padding: 10px;
-    margin: 10px;
+    font-size: 16px;
+  }
+  
+  #suggestions {
+    list-style: none;
+    padding: 0;
+    margin: 10px auto;
+    text-align: left;
+    max-width: 400px;
+  }
+  
+  #suggestions li {
+    padding: 8px;
+    background: #fff;
+    border: 1px solid #ddd;
+    cursor: pointer;
   }
   
   #movieDetails {
+    background: #fff;
     margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  #movieDetails img {
+    max-width: 100%;
+  }
+  
+  .rating-high {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .rating-medium {
+    color: orange;
+    font-weight: bold;
+  }
+  
+  .rating-low {
+    color: red;
+    font-weight: bold;
   }
   
