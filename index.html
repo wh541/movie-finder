@@ -3,105 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🎬 Movie Finder</title>
+  <title>Movie Finder</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      background-color: #1e1e2f;
-      color: #f0f0f0;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    .container {
-      background: #2d2d44;
-      padding: 2rem;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 500px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.4);
-    }
-
-    h1 {
-      text-align: center;
-      color: #ffc107;
-    }
-
-    input, select, button {
-      width: 100%;
-      padding: 10px;
-      margin: 0.5rem 0;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: none;
-    }
-
-    button {
-      background-color: #ffc107;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    #results {
-      margin-top: 1.5rem;
-    }
-
-    #results img {
-      margin-top: 10px;
-      max-width: 100%;
-      border-radius: 6px;
-    }
-
-    #watchLaterList {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    #watchLaterList li {
-      margin: 4px 0;
-    }
-
-    #watchLaterList a {
-      color: #61dafb;
-      text-decoration: none;
-    }
-
-    #watchLaterList a:hover {
-      text-decoration: underline;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
     <h1>🎬 Movie Finder</h1>
-
-    <input type="text" id="movieInput" placeholder="Enter movie title" />
-
-    <select id="genreSelect">
-      <option value="All">All Genres</option>
-      <option value="Action">Action</option>
-      <option value="Comedy">Comedy</option>
-      <option value="Drama">Drama</option>
-      <option value="Horror">Horror</option>
-      <option value="Romance">Romance</option>
-      <option value="Sci-Fi">Sci-Fi</option>
-      <option value="Documentary">Documentary</option>
-    </select>
-
+    <div class="input-group">
+      <input type="text" id="movieInput" placeholder="Enter movie title" list="suggestions"/>
+      <select id="genreFilter">
+        <option value="">All Genres</option>
+        <option value="Action">Action</option>
+        <option value="Comedy">Comedy</option>
+        <option value="Drama">Drama</option>
+        <option value="Horror">Horror</option>
+        <option value="Romance">Romance</option>
+        <option value="Sci-Fi">Sci-Fi</option>
+        <!-- Add more genres as needed -->
+      </select>
+    </div>
     <button id="searchBtn">Search</button>
+    <datalist id="suggestions"></datalist>
 
-    <div id="results"></div>
+    <div id="movieInfo"></div>
 
-    <h3>📌 Watch Later</h3>
+    <h2>📌 Watch Later</h2>
     <ul id="watchLaterList"></ul>
 
-    <p style="margin-top:1rem;"><strong>Enter your OMDb API Key:</strong></p>
-    <input type="text" id="apiKeyInput" placeholder="Your API Key" />
-    <button id="saveKeyBtn">Save Key</button>
+    <div class="api-key-section">
+      <label for="apiKeyInput">Enter your OMDb API Key:</label>
+      <input type="text" id="apiKeyInput" placeholder="Your API Key"/>
+      <button id="saveKeyBtn">Save Key</button>
+    </div>
   </div>
 
   <script src="script.js"></script>
