@@ -1,57 +1,70 @@
 body {
-    background-color: #1e1e2f;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #fff;
-    text-align: center;
+    background-color: #1f1f2e;
+    font-family: 'Segoe UI', sans-serif;
+    color: #f0f0f0;
     margin: 0;
-    padding: 2rem;
+    padding: 20px;
   }
   
   .container {
-    background-color: #2d2d44;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
-    max-width: 600px;
+    max-width: 700px;
     margin: auto;
+    background: #2c2c3e;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.3);
+    text-align: center;
   }
   
-  h1 {
-    color: #feca57;
-    margin-bottom: 1rem;
+  h1, h2 {
+    color: #f6c358;
   }
   
-  input[type="text"] {
-    padding: 0.6rem;
-    width: 60%;
-    margin: 1rem 0;
+  .search-bar {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  
+  input, select, button {
+    padding: 10px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
+  }
+  
+  input, select {
+    width: 200px;
   }
   
   button {
-    background-color: #feca57;
-    color: #1e1e2f;
-    border: none;
-    padding: 0.6rem 1rem;
-    border-radius: 4px;
+    background-color: #f6c358;
+    color: black;
+    font-weight: bold;
     cursor: pointer;
   }
   
   button:hover {
-    background-color: #f3a847;
+    background-color: #e0a93b;
   }
   
-  #movieDetails {
-    margin-top: 2rem;
+  #movieInfo img {
+    margin-top: 10px;
+    width: 180px;
+    border-radius: 10px;
   }
   
-  img {
-    max-width: 200px;
-    margin-top: 1rem;
+  #watchLaterList {
+    list-style: none;
+    padding: 0;
   }
   
-  .api-prompt {
-    margin-top: 2rem;
+  #watchLaterList li {
+    margin: 10px 0;
+  }
+  
+  .api-key-form {
+    margin-top: 30px;
   }
   
