@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const li = document.createElement("li");
           const removeBtn = document.createElement("span");
       
-          removeBtn.textContent = "X";
+          removeBtn.textContent = "❌";
           removeBtn.style.cursor = "pointer";
           removeBtn.style.marginRight = "8px";
           removeBtn.style.color = "#00bcd4"; // Match the movie link color
