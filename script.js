@@ -83,12 +83,38 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
   
-    function renderWatchLater() {
-      const saved = JSON.parse(localStorage.getItem("watchLater")) || [];
-      watchLaterList.innerHTML = saved.map(m => `
-        <li><a href="https://www.imdb.com/title/${m.imdbID}" target="_blank">${m.title}</a></li>
-      `).join("");
-    }
+    function renderWatchLaterList() {
+        const watchLaterList = document.getElementById("watchLaterList");
+        watchLaterList.innerHTML = "";
+        const saved = JSON.parse(localStorage.getItem("watchLater")) || [];
+      
+        saved.forEach((movie) => {
+          const li = document.createElement("li");
+          const removeBtn = document.createElement("span");
+      
+          removeBtn.textContent = "X";
+          removeBtn.style.cursor = "pointer";
+          removeBtn.style.marginRight = "8px";
+          removeBtn.style.color = "#00bcd4"; // Match the movie link color
+      
+          removeBtn.addEventListener("click", () => {
+            const updatedList = saved.filter((m) => m !== movie);
+            localStorage.setItem("watchLater", JSON.stringify(updatedList));
+            renderWatchLaterList();
+          });
+      
+          const link = document.createElement("a");
+          link.href = `https://www.imdb.com/find?q=${encodeURIComponent(movie)}`;
+          link.target = "_blank";
+          link.textContent = movie;
+          link.style.color = "#00bcd4";
+      
+          li.appendChild(removeBtn);
+          li.appendChild(link);
+          watchLaterList.appendChild(li);
+        });
+      }
+      
   
     backBtn.addEventListener("click", () => {
       movieInfo.innerHTML = "";
