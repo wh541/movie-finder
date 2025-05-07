@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🎬 Movie Finder</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
     <h1>🎬 Movie Finder</h1>
-    <div class="search-bar">
-      <input type="text" id="movieInput" placeholder="Enter movie title">
+    
+    <div class="search-box">
+      <input type="text" id="movieInput" placeholder="Enter movie title" autocomplete="off"/>
       <select id="genreSelect">
         <option value="">All Genres</option>
         <option value="Action">Action</option>
@@ -18,19 +20,20 @@
         <option value="Drama">Drama</option>
         <option value="Horror">Horror</option>
         <option value="Romance">Romance</option>
-        <!-- Add more genres if needed -->
+        <option value="Sci-Fi">Sci-Fi</option>
       </select>
-      <button onclick="searchMovie()">Search</button>
+      <button id="searchBtn">Search</button>
+      <ul id="suggestions"></ul>
     </div>
-    
-    <div id="movieInfo"></div>
+
+    <div id="movieDetails"></div>
 
     <h2>📌 Watch Later</h2>
     <ul id="watchLaterList"></ul>
 
-    <div class="api-key-form">
-      <label>Enter your OMDb API Key: </label>
-      <input type="text" id="apiKeyInput" placeholder="Your API Key" />
+    <div class="key-entry">
+      <label for="apiKeyInput">Enter your OMDb API Key:</label>
+      <input type="text" id="apiKeyInput" placeholder="Your API Key">
       <button onclick="saveApiKey()">Save Key</button>
     </div>
   </div>

@@ -1,87 +1,77 @@
-function getApiKey() {
-    return sessionStorage.getItem('omdbApiKey');
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #1e1e2f;
+    color: #f4f4f4;
   }
   
-  function saveApiKey() {
-    const key = document.getElementById('apiKeyInput').value.trim();
-    if (key) {
-      sessionStorage.setItem('omdbApiKey', key);
-      alert('API key saved!');
-    }
+  .container {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #2c2c3e;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    text-align: center;
   }
   
-  function searchMovie() {
-    const title = document.getElementById('movieInput').value.trim();
-    const genreFilter = document.getElementById('genreSelect').value;
-    const apiKey = getApiKey();
-  
-    if (!apiKey) {
-      alert('Please enter your OMDb API key first.');
-      return;
-    }
-  
-    if (!title) {
-      alert('Please enter a movie title.');
-      return;
-    }
-  
-    const url = `https://www.omdbapi.com/?apikey=${apiKey}&t=${encodeURIComponent(title)}`;
-  
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        const infoDiv = document.getElementById('movieInfo');
-        if (data.Response === "False") {
-          infoDiv.innerHTML = `<p>❌ Movie not found.</p>`;
-          return;
-        }
-  
-        if (genreFilter && !data.Genre.toLowerCase().includes(genreFilter.toLowerCase())) {
-          infoDiv.innerHTML = `<p>❌ Genre does not match filter.</p>`;
-          return;
-        }
-  
-        const imdbLink = `https://www.imdb.com/title/${data.imdbID}`;
-        infoDiv.innerHTML = `
-          <h3>${data.Title} (${data.Year})</h3>
-          <p><strong>Genre:</strong> ${data.Genre}</p>
-          <p><strong>Director:</strong> ${data.Director}</p>
-          <p><strong>Plot:</strong> ${data.Plot}</p>
-          <p><strong>IMDb Rating:</strong> ${data.imdbRating}</p>
-          <a href="${imdbLink}" target="_blank">🔗 View on IMDb</a><br><br>
-          <img src="${data.Poster}" alt="${data.Title} Poster"/>
-          <br><br><button onclick='addToWatchLater("${data.Title}", "${data.imdbID}")'>📌 Watch Later</button>
-        `;
-      })
-      .catch(err => {
-        console.error(err);
-        alert('Error fetching movie data.');
-      });
+  h1 {
+    margin-bottom: 20px;
+    color: #fcbf49;
   }
   
-  function addToWatchLater(title, imdbID) {
-    const stored = JSON.parse(localStorage.getItem('watchLater') || '[]');
-    if (!stored.find(m => m.imdbID === imdbID)) {
-      stored.push({ title, imdbID });
-      localStorage.setItem('watchLater', JSON.stringify(stored));
-      displayWatchLater();
-    }
+  input[type="text"], select {
+    padding: 10px;
+    width: 60%;
+    margin: 10px 5px;
+    border-radius: 5px;
+    border: none;
   }
   
-  function displayWatchLater() {
-    const list = document.getElementById('watchLaterList');
-    const stored = JSON.parse(localStorage.getItem('watchLater') || '[]');
-    list.innerHTML = '';
-  
-    stored.forEach(movie => {
-      const li = document.createElement('li');
-      li.innerHTML = `<a href="https://www.imdb.com/title/${movie.imdbID}" target="_blank">${movie.title}</a>`;
-      list.appendChild(li);
-    });
+  button {
+    padding: 10px 15px;
+    background-color: #fcbf49;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
   }
   
-  // Initialize
-  document.addEventListener('DOMContentLoaded', () => {
-    displayWatchLater();
-  });
+  button:hover {
+    background-color: #f1a51b;
+  }
+  
+  #movieDetails img {
+    margin-top: 15px;
+    max-width: 200px;
+    border-radius: 5px;
+  }
+  
+  #suggestions {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: -10px;
+    background-color: #3a3a4f;
+    border-radius: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  
+  #suggestions li {
+    padding: 8px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #555;
+  }
+  
+  #suggestions li:hover {
+    background-color: #4a4a5f;
+  }
+  
+  #watchLaterList li {
+    margin-top: 5px;
+  }
+  
+  .key-entry {
+    margin-top: 20px;
+  }
   
