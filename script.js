@@ -2,12 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const apiKeyInput = document.getElementById("apiKeyInput");
     const saveKeyBtn = document.getElementById("saveKeyBtn");
     const searchBtn = document.getElementById("searchBtn");
-    const searchInput = document.getElementById("searchInput");
+    const movieInput = document.getElementById("movieInput");
     const genreFilter = document.getElementById("genreFilter");
-    const movieDetails = document.getElementById("movieDetails");
+    const movieInfo = document.getElementById("movieInfo");
     const watchLaterList = document.getElementById("watchLaterList");
     const backBtn = document.getElementById("backBtn");
-    const backBtnContainer = document.getElementById("backBtnContainer");
     const suggestions = document.getElementById("suggestions");
   
     let apiKey = sessionStorage.getItem("omdbApiKey") || "";
@@ -15,92 +14,87 @@ document.addEventListener("DOMContentLoaded", () => {
   
     saveKeyBtn.addEventListener("click", () => {
       apiKey = apiKeyInput.value.trim();
-      if (apiKey) sessionStorage.setItem("omdbApiKey", apiKey);
-      alert("API key saved!");
+      if (apiKey) {
+        sessionStorage.setItem("omdbApiKey", apiKey);
+        alert("API key saved!");
+      }
     });
   
     searchBtn.addEventListener("click", () => {
-      const query = searchInput.value.trim();
-      const genre = genreFilter.value.trim();
-      if (query && apiKey) searchMovie(query, genre);
+      const title = movieInput.value.trim();
+      const genre = genreFilter.value;
+      if (!title || !apiKey) return;
+      fetchMovie(title, genre);
     });
   
-    searchInput.addEventListener("input", () => {
-      const text = searchInput.value.trim();
-      if (text.length < 2 || !apiKey) return;
-      fetch(`https://www.omdbapi.com/?s=${text}&apikey=${apiKey}`)
+    movieInput.addEventListener("input", () => {
+      const query = movieInput.value.trim();
+      if (query.length < 2 || !apiKey) return;
+      fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(query)}&apikey=${apiKey}`)
         .then(res => res.json())
         .then(data => {
+          suggestions.innerHTML = "";
           if (data.Search) {
-            suggestions.innerHTML = "";
             data.Search.forEach(movie => {
-              const opt = document.createElement("option");
-              opt.value = movie.Title;
-              suggestions.appendChild(opt);
+              const option = document.createElement("option");
+              option.value = movie.Title;
+              suggestions.appendChild(option);
             });
           }
         });
     });
   
-    function searchMovie(title, genre) {
-      movieDetails.innerHTML = "";
-      fetch(`https://www.omdbapi.com/?t=${title}&apikey=${apiKey}`)
+    function fetchMovie(title, genre) {
+      fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(title)}&apikey=${apiKey}`)
         .then(res => res.json())
         .then(data => {
-          if (data.Response === "True") {
-            if (!genre || data.Genre.includes(genre)) {
-              displayMovie(data);
-            } else {
-              movieDetails.innerHTML = "<p>No match for selected genre.</p>";
-            }
-          } else {
-            movieDetails.innerHTML = "<p>Movie not found.</p>";
+          if (data.Response === "False") {
+            movieInfo.innerHTML = "<p>Movie not found.</p>";
+            return;
           }
+          if (genre && !data.Genre.includes(genre)) {
+            movieInfo.innerHTML = "<p>No match for selected genre.</p>";
+            return;
+          }
+          displayMovie(data);
         });
     }
   
     function displayMovie(data) {
-      movieDetails.innerHTML = `
+      movieInfo.innerHTML = `
         <h3>${data.Title} (${data.Year})</h3>
         <p><strong>Genre:</strong> ${data.Genre}</p>
         <p><strong>Director:</strong> ${data.Director}</p>
         <p><strong>Plot:</strong> ${data.Plot}</p>
         <p><strong>IMDb Rating:</strong> ${data.imdbRating}</p>
-        <img src="${data.Poster !== "N/A" ? data.Poster : ""}" alt="Poster"/>
-        <br><a href="https://www.imdb.com/title/${data.imdbID}/" target="_blank">🔗 View on IMDb</a>
-        <br><button onclick="addToWatchLater('${data.Title}', '${data.imdbID}')">➕ Watch Later</button>
+        <img src="${data.Poster}" alt="Poster for ${data.Title}"><br>
+        <a href="https://www.imdb.com/title/${data.imdbID}" target="_blank">🔗 View on IMDb</a><br><br>
+        <button onclick="addToWatchLater('${data.Title}', '${data.imdbID}')">📌 Add to Watch Later</button>
       `;
-      backBtnContainer.style.display = "block";
+      backBtn.style.display = "block";
     }
   
     window.addToWatchLater = (title, imdbID) => {
-      const saved = JSON.parse(localStorage.getItem("watchLater") || "[]");
+      const saved = JSON.parse(localStorage.getItem("watchLater")) || [];
       if (!saved.find(m => m.imdbID === imdbID)) {
         saved.push({ title, imdbID });
         localStorage.setItem("watchLater", JSON.stringify(saved));
-        loadWatchLater();
+        renderWatchLater();
       }
     };
   
-    function loadWatchLater() {
-      watchLaterList.innerHTML = "";
-      const saved = JSON.parse(localStorage.getItem("watchLater") || "[]");
-      if (saved.length === 0) {
-        watchLaterList.innerHTML = "<p>No saved movies.</p>";
-        return;
-      }
-      saved.forEach(m => {
-        const li = document.createElement("li");
-        li.innerHTML = `<a href="https://www.imdb.com/title/${m.imdbID}/" target="_blank">${m.title}</a>`;
-        watchLaterList.appendChild(li);
-      });
+    function renderWatchLater() {
+      const saved = JSON.parse(localStorage.getItem("watchLater")) || [];
+      watchLaterList.innerHTML = saved.map(m => `
+        <li><a href="https://www.imdb.com/title/${m.imdbID}" target="_blank">${m.title}</a></li>
+      `).join("");
     }
   
     backBtn.addEventListener("click", () => {
-      movieDetails.innerHTML = "";
-      backBtnContainer.style.display = "none";
+      movieInfo.innerHTML = "";
+      backBtn.style.display = "none";
     });
   
-    loadWatchLater();
+    renderWatchLater();
   });
   
